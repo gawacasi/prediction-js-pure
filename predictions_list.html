@@ -55,8 +55,9 @@
               Tipo de Aeronave: ${prediction.aircraft_type}<br>
               Predição: ${prediction.prediction === 0 ? 'Sobreviveu' : 'Fatalidade'}<br>
               <img src="data:image/png;base64,${prediction.input_chart_base64}" alt="Gráfico de Entrada"><br>
-              <img src="data:image/png;base64,${prediction.result_chart_base64}" alt="Gráfico de Resultado">
-            `;
+              <img src="data:image/png;base64,${prediction.result_chart_base64}" alt="Gráfico de Resultado"><br>
+              <img src="data:image/png;base64,${prediction.aboard_histogram_base64}" alt="Histograma Aboard"><br>
+              <img src="data:image/png;base64,${prediction.fatal_pie_base64}" alt="Gráfico de Pizza de Fatalidade">`;
             predictionsList.appendChild(listItem);
           });
         }

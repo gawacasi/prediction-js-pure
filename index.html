@@ -49,7 +49,8 @@
   <h3>Gráficos:</h3>
   <div id="inputChartContainer"></div>
   <div id="resultChartContainer"></div>
-
+  <div id="aboardChartContainer"></div>
+  <div id="fatalPieChartContainer"></div>
 
   <script>
     async function carregarOpcoes() {
@@ -109,7 +110,7 @@
             const inputImg = document.createElement('img');
             inputImg.src = `data:image/png;base64,${result.input_chart}`;
             inputImg.alt = "Gráfico de Entrada";
-            inputImg.style = "margin-top: 10px; max-width: 400px;";
+            inputImg.style = "margin-top: 10px; max-width: 600px;";
             document.getElementById('inputChartContainer').innerHTML = ''; // Limpa o conteúdo anterior
             document.getElementById('inputChartContainer').appendChild(inputImg);
           }
@@ -118,10 +119,30 @@
             const resultImg = document.createElement('img');
             resultImg.src = `data:image/png;base64,${result.result_chart}`;
             resultImg.alt = "Gráfico do Resultado";
-            resultImg.style = "margin-top: 10px; max-width: 400px;";
+            resultImg.style = "margin-top: 10px; max-width: 600px;";
             document.getElementById('resultChartContainer').innerHTML = ''; // Limpa o conteúdo anterior
             document.getElementById('resultChartContainer').appendChild(resultImg);
           }
+
+          if (result.aboard_histogram) {
+            const aboardImg = document.createElement('img');
+            aboardImg.src = `data:image/png;base64,${result.aboard_histogram}`;
+            aboardImg.alt = "Histograma de Aboard";
+            aboardImg.style = "margin-top: 10px; max-width: 600px;";
+            document.getElementById('aboardChartContainer').innerHTML = '';
+            document.getElementById('aboardChartContainer').appendChild(aboardImg);
+          }
+
+            if (result.fatal_pie_chart) {
+            const pieImg = document.createElement('img');
+            pieImg.src = `data:image/png;base64,${result.fatal_pie_chart}`;
+            pieImg.alt = "Gráfico de Pizza de Fatalidade";
+            pieImg.style = "margin-top: 10px; max-width: 600px;";
+            document.getElementById('fatalPieChartContainer').innerHTML = '';
+            document.getElementById('fatalPieChartContainer').appendChild(pieImg);
+          }
+
+
         } else {
           document.getElementById('resultado').innerText = 'Erro: ' + result.message;
         }
@@ -135,18 +156,17 @@
 </body>
 </html>
 <style>
-  body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f9;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    box-sizing: border-box;
-  }
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+}
+
 
   h2, h3 {
     color: #333;
@@ -167,9 +187,7 @@
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    width: 400px;
-    margin-bottom: 20px;
-    margin-top: 15%;
+    width: 100%;
   }
 
   label {
