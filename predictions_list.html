@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Lista de Predições Anteriores</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .prediction-item {
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .prediction-item img {
+      max-width: 300px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Predições Anteriores</h2>
+  <div id="predictionsList"></div>
+
+  <script>
+    // Função para carregar as predições anteriores
+    async function carregarPredicoes() {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/predictions');
+        const predictions = await response.json();
+
+        const predictionsList = document.getElementById('predictionsList');
+        predictionsList.innerHTML = ''; // Limpa a lista antes de adicionar os novos itens
+
+        if (predictions.length === 0) {
+          predictionsList.innerHTML = "<p>Não há predições anteriores registradas.</p>";
+        } else {
+          predictions.forEach(prediction => {
+            const listItem = document.createElement('div');
+            listItem.classList.add('prediction-item');
+            listItem.innerHTML = `
+              <strong>Predição ID: ${prediction.id}</strong><br>
+              Localização: ${prediction.location}<br>
+              Operador: ${prediction.operator}<br>
+              Pessoas a Bordo: ${prediction.aboard}<br>
+              Fatalidades em Terra: ${prediction.ground}<br>
+              Ano: ${prediction.year}<br>
+              Mês: ${prediction.month}<br>
+              Dia da Semana: ${prediction.weekday}<br>
+              Tipo de Aeronave: ${prediction.aircraft_type}<br>
+              Predição: ${prediction.prediction === 0 ? 'Sobreviveu' : 'Fatalidade'}<br>
+              <img src="data:image/png;base64,${prediction.input_chart_base64}" alt="Gráfico de Entrada"><br>
+              <img src="data:image/png;base64,${prediction.result_chart_base64}" alt="Gráfico de Resultado">
+            `;
+            predictionsList.appendChild(listItem);
+          });
+        }
+      } catch (error) {
+        console.error('Erro ao carregar predições:', error);
+      }
+    }
+
+    carregarPredicoes();
+  </script>
+</body>
+</html>
